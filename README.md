@@ -42,8 +42,27 @@ JavaScript: ```server.specific = [<object>, <object>]```
 
 Default: ```[]```
 
-**Description:** In JSON the string references a path to a file under the root (if it is there) on which a `require` will be called. An object with the following properties will be expected:
+**Description:** In JSON the string references a path to a file under the root (if it is there) on which a `require` will be called. An object with the following methods will be expected:
 
-  Name : Type : Parameters : Return Type : Description
-- getPath : <function> : No Params : String : Returns the string that is the virtual path of the binding
+  Name : Parameters : Return Type : Description
+- getPath : No Params : String : Returns the string that is the virtual path of the binding
 - open : response, request, path : Number : Will be called when that binding is requested, should return the response code 
+
+### Equal
+JSON: ```"equal": {<string>: <string>}```
+
+JavaScript: ```server.equal = {<string>: <string>, <string>: <string>, etc...}```
+
+Default: ```{'/': 'index.html'}```
+
+**Description:** If the key is requested, we will instead return the value, ie, requesting '/' will actually be treated as requesting 'index.html'.
+
+### Error Pages
+JSON: ```"error-pages": [{"type": <number>, "text": <string>}, {"type": <number>, "file": <string>}, etc...]```
+
+JavaScript: ```server.errorPages = {<number>: {"text": <string>}, <number>: {"file": <string>}}```
+
+Default: ```{}```
+
+**Description:** Error pages to be used when an error http code comes up such as 404 or 403. `type` in the JSON is the code, eg 404, this is the key number in the JavaScript also. If the value is of type `text` then that string will be returned, otherwise if `file` is  given then the file at that path will be given.
+
