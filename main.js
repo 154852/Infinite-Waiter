@@ -391,3 +391,5 @@ Server.loadFromConfig = function(path) {
 
     return server;
 }
+
+module.exports = Server;
