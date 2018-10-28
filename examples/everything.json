@@ -1,0 +1,47 @@
+{
+  "root": "/my/path/to/a/folder",
+  "port": 8080,
+  "equal": {
+    "/": "index.html"
+  },
+  "error-pages": [
+    {
+      "type": 404,
+      "file": "404.html"
+    }, {
+      "type": 403,
+      "text": "You do not have permission to access this page!"
+    }
+  ],
+  "illegal": [
+    {
+      "value": "~",
+      "regex": false
+    }, {
+      "value": "NO-ACCESS-DIR/.*",
+      "regex": true
+    }
+  ],
+  "hidden": [
+    {
+      "value": "FILE-THAT-WILL-RETURN-404-EVEN-THOUGH-IT-EXISTS",
+      "regex": false
+    }
+  ],
+  "bindings": ["JSHTML-SOURCE-FILE.js"],
+  "websocket": {
+    "enabled": true,
+    "handler": "ws-handler.js"
+  },
+  "reverse-proxies": [
+    {
+      "input": "app*",
+      "target": "http://localhost:1000/other-domain",
+      "cut": 2
+    }, {
+      "input": "thing*",
+      "target": "http://google.com",
+      "cut": 2
+    }
+  ]
+}
