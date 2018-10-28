@@ -335,8 +335,8 @@ Object.prototype.withoutKey = function(key) {
     return x;
 }
 
-Server.loadFromConfig = function(path) {
-    const data = JSON.parse(fs.readFileSync(path).toString());
+Server.loadFromConfig = function(data) {
+    if (typeof data == 'string') data = JSON.parse(fs.readFileSync(data).toString());
 
     const server = new Server(data.root, data.port);
     server.equal = data.equal == null? {}:data.equal;
@@ -345,7 +345,7 @@ Server.loadFromConfig = function(path) {
         server.port = process.argv[2];
     }
 
-    if (data.errorPages != null) {
+    if (data['error-pages'] != null) {
         for (const errorPage of data['error-pages']) {
             server.errorPages[errorPage.type] = errorPage.withoutKey('type');
         }
@@ -381,12 +381,14 @@ Server.loadFromConfig = function(path) {
         server.websocket = require(server.root == null? data.websocket.handler : server.root + '/' + data.websocket.handler);
     }
 
-    for (const reverseProxy of data['reverse-proxies']) {
-        server.reverseProxies.push({
-            input: new RegExp(reverseProxy.input.replace(/\*/g, '.*')),
-            target: reverseProxy.target,
-            cut: reverseProxy.cut
-        });
+    if (data['reverse-proxies'] != null) {
+        for (const reverseProxy of data['reverse-proxies']) {
+            server.reverseProxies.push({
+                input: new RegExp(reverseProxy.input.replace(/\*/g, '.*')),
+                target: reverseProxy.target,
+                cut: reverseProxy.cut
+            });
+        }
     }
 
     return server;
