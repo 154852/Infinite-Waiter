@@ -346,7 +346,7 @@ Server.loadFromConfig = function(path) {
     }
 
     if (data.errorPages != null) {
-        for (const errorPage of data.errorPages) {
+        for (const errorPage of data['error-pages']) {
             server.errorPages[errorPage.type] = errorPage.withoutKey('type');
         }
     }
@@ -391,5 +391,3 @@ Server.loadFromConfig = function(path) {
 
     return server;
 }
-
-Server.loadFromConfig('/volume1/web/reverse-proxies/reverse-proxies.json').start();
