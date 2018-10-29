@@ -264,6 +264,28 @@ class Server {
         return [fs.readFileSync(path), this.getFileType(path)];
     }
 
+    getDirConfig(path) {
+        path = pathReq.dirname(path).replace(/\/+/g, '/');
+
+        const data = {};
+
+        for (var i = -1; i < path.split('/').length - this.root.split('/').length; i++) {
+            const confPath = path + '/' + '../'.repeat(i + 1) + 'dir.conf';
+
+            if (fs.existsSync(confPath)) {
+                const secondData = this.loadConfig(confPath);
+
+                for (const key in secondData) {
+                    if (!(key in data)) {
+                        data[key] = secondData[key];
+                    }
+                }
+            }
+        }
+
+        return data;
+    }
+
     getResponseForFile(path, res, req) {
         let page, code, type;
 
@@ -274,25 +296,26 @@ class Server {
         for (const file of files) {
             if (file == name || file == name + pathReq.extname(file)) {
                 let data;
-                try {
+                const config = this.getDirConfig(dir + file);
+
+                if (config.hidden == 'true') {
+                    data = 404;
+                } else if (config.illegal == 'true') {
+                    data = 403;
+                } else try {
                     data = this.read200(dir + file);
                 } catch (exc) {
-                    if (fs.existsSync(dir + file + '/dir.conf')) {
-                        const config = Server.loadConfig(dir + file + '/dir.conf');
-                        if ('default' in config) {
-                            data = this.read200(dir + file + '/' + config.default);
-                        }
-                    }
+                    if (config.default != null) data = this.read200(dir + file + '/' + config.default);
                 }
 
                 if (data != null) {
-                    page = pathReq.extname(file) == '.jshtml'? this.jshtml(data[0].toString(), res, req):data[0];
-
                     if (typeof page == 'number') {
                         code = page;
                         page = this.getErrorPage(code);
                         type = 'text/html';
                     } else {
+                        page = pathReq.extname(file) == '.jshtml'? this.jshtml(data[0].toString(), res, req):data[0];
+
                         code = 200;
                         type = data[1];
                     }
