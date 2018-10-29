@@ -119,3 +119,24 @@ requested: '/some-path/hello-world'
 cut-part: 'hello-world'
 output: 'localhost:9090/abc/hello-world'
 ```
+
+### JSHTML
+When a page is distributed if it's extension is `.jshtml` then it is treated as JavaScript HTML. This means that any text within `<: <javascript> :>` is treated as javascript and is run *on the server*, as a function. The current http request and reponse are accessible with `request` and `response`. A string should be returned here. Text within `<* <javascript> *>` will be treated the same, but imagine a return statement before your code, this should be for a simple object. New lines are allowed in the code.
+
+**Examples:**
+```
+<p>The date and time is <* new Date().toString(); *>.</p>
+
+<p>This is <:
+  const date = new Date();
+  return date.getTime().toString()
+:> in milliseconds</p>
+```
+
+### Directory Configuration
+When a page is requested we will go all the way up through the file tree up to the root path looking for `dir.conf` files.
+These files can contain the following information:
+`#comments;` Comments
+`default: <path name>;` A default file to give if only a path to that directory is given. Eg: if `folder/inner-folder` is requested, but inside of `inner-folder` there is a file called `dir.conf` with `default: app.html;` in it, then `app.html` inside of that folder is instead returned.
+`hidden: [true|false];` Marks that that directory and *all* sub files and directories should return a 404.
+`illegal: [true|false];` Marks that that directory and *all* sub files and directories should return a 403.
