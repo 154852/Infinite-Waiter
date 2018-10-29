@@ -136,7 +136,11 @@ When a page is distributed if it's extension is `.jshtml` then it is treated as 
 ### Directory Configuration
 When a page is requested we will go all the way up through the file tree up to the root path looking for `dir.conf` files.
 These files can contain the following information:
+
 `#comments;` Comments
+
 `default: <path name>;` A default file to give if only a path to that directory is given. Eg: if `folder/inner-folder` is requested, but inside of `inner-folder` there is a file called `dir.conf` with `default: app.html;` in it, then `app.html` inside of that folder is instead returned.
+
 `hidden: [true|false];` Marks that that directory and *all* sub files and directories should return a 404.
+
 `illegal: [true|false];` Marks that that directory and *all* sub files and directories should return a 403.
