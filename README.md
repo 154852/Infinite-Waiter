@@ -66,3 +66,56 @@ Default: ```{}```
 
 **Description:** Error pages to be used when an error http code comes up such as 404 or 403. `type` in the JSON is the code, eg 404, this is the key number in the JavaScript also. If the value is of type `text` then that string will be returned, otherwise if `file` is  given then the file at that path will be given.
 
+### Illegal
+JSON: `"illegal": [{"value": "forbidden-dir", "regex": false}, {"value": "other-forbidden-dir/.*", "regex": true}, etc...]`
+
+JavaScript: `server.illegal = ["forbidden-dir", /other-forbidden-dir/.*/]`
+
+Default: `[/\.\./, /~/]`
+
+**Description:** These will return a 403 when matched. Due to regexp not being available in JSON a regex can be marked with `"regex": true`, in which case `"flags": "<flags>"` is available. If it is not a regex then it has to be an exact match to be illegal.
+
+### Hidden
+JSON: `"hidden": [{"value": "hidden-dir", "regex": false}, {"value": "other-hidden-dir/.*", "regex": true}, etc...]`
+
+JavaScript: `server.hidden = ["hidden-dir", /other-hidden-dir/.*/]`
+
+Default: `[]`
+
+**Description:** Works the same way as illegals, except these will return a 404, even if they exist.
+
+### Websockets
+JSON: `"websocket": {"enabled": "true", "handler": "path/to/js/file.js"}`
+
+JavaScript: `server.websocket = 'path/to/js/file.js'`
+
+Default: `null`
+
+**Description:** Similar to bindings, except the handler js file is expected to have the following export:
+
+  Name : Parameters : Return Type : Description
+- connection : connection, request : No return : Called when someone opens the socket
+- message : connection, string : No return : Called when someone submits data to the socket
+- close : connection : No return : Called when someone closes the socket
+
+**Note:** The connection object comes from (here)[https://www.npmjs.com/package/websocket], as does the request object.
+
+### Reverse Proxies:
+JSON: `"reverse-proxies": [{"input": "some-path", "target": "localhost:5050/something", "cut": 2}]`
+
+JavaScript: `server.reverseProxies = [{input: "some-path", target: "localhost:5050/something", cut: 2}]`
+
+Default: `[]`
+
+**Description:** Basic reverse proxies, input is the listening path, `*` matches everything. Target is the destintination, can be alternate server with path on the end. Cut is used like so: `req.url.split('/').splice(reverseProxy.cut).join('/')`, meaning it is how many slashed sections to remove... This path is then put on the end of the target (kind of).
+
+**Example:**
+```
+input: 'some-path'
+target: 'localhost:9090/abc'
+cut: 2
+
+requested: '/some-path/hello-world'
+cut-part: 'hello-world'
+output: 'localhost:9090/abc/hello-world'
+```
