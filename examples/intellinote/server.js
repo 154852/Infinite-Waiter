@@ -3,8 +3,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     service: 'gmail', // Although not always - check https://nodemailer.com/ for more information
     auth: {
-        user: '<YOUR EMAIL - 3rd party applications must be enabled to work>',
-        pass: '<YOUR PASSWORD>'
+        user: '<EMAIL>',
+        pass: '<PASSWORD>'
     }
 });
 
@@ -35,7 +35,7 @@ function key(length) {
 
 const server = require('infinite-waiter').loadFromConfig({
     port: 1234,
-    root: '<PATH TO ROOT>',
+    root: '<ROOT>',
     equal: {
         '/': '/index.html'
     },
@@ -51,6 +51,22 @@ const server = require('infinite-waiter').loadFromConfig({
         file: '/error/403.html'
     }]
 });
+
+server.websocket = {
+    connection: function(connection, request) {
+        connection.ip = request.remoteAddress;
+    },
+    message: function(connection, string) {
+        const data = read(string, connection.ip);
+        connection.sendUTF(JSON.stringify({
+            success: data != null,
+            error: data == null? 'Invalid key':null,
+            text: data
+        }));
+    },
+    close: function(connection) {
+    }
+}
 
 server.specific.push({
     getPath: function() {
@@ -70,7 +86,7 @@ server.specific.push({
         pendingConfirms[id] = {email: data.query.email, username: data.query.username, password: data.query.password.hash(), note: '', keys: []};
 
         transporter.sendMail({
-            from: '<SAME EMAIL AS LOGGED IN WITH ABOVE>',
+            from: '<EMAIL>',
             to: data.query.email,
             subject: 'IntelliNote: Please Confirm Your Email Address',
             html: require('fs').readFileSync(server.root + '/email-content.html').toString().replace('[USERNAME]', data.query.username).replace(/\[ADDRESS\]/g, 'localhost:' + server.port).replace('[ID]', id)
@@ -121,35 +137,34 @@ server.specific.push({
     }
 });
 
+function read(key, ip) {
+    for (const user of users) {
+        for (const userKey of user.keys) {
+            if (userKey.id == key && userKey.ip == ip) {
+                return user.note;
+            }
+        }
+    }
+
+    return null;
+}
+
 server.specific.push({
     getPath: function() {
         return '/read'
     },
     open: function(res, req) {
-        const data = URLS.parse(req.url, true);
-
-        for (const user of users) {
-            for (const userKey of user.keys) {
-                if (userKey.id == data.query.key && userKey.ip == req.connection.remoteAddress) {
-                    res.writeHead(200, {'content-type': 'application/json'});
-                    res.write(JSON.stringify({
-                        success: true,
-                        content: user.note,
-                    }));
-                    res.end();
-                    return 200;
-                }
-            }
-        }
+        const data = read(URLS.parse(req.url, true).query.key, request.connection.remoteAddress);
 
         res.writeHead(403, {'content-type': 'application/json'});
         res.write(JSON.stringify({
-            success: false,
-            error: 'Invalid key'
+            success: data != null,
+            error: data == null? 'Invalid key':null,
+            text: data
         }));
         res.end();
 
-        return 403;
+        return data == null? 403:200;
     }
 });
 

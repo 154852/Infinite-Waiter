@@ -38,12 +38,24 @@ window.addEventListener('load', function() {
             APP.write(main.value);
         });
 
-        APP.read(function(json) {
-            main.value = json.content;
-        }, function(json) {
-            const error = document.querySelector('.error-main');
-            error.innerHTML = 'An error occurred when trying to read your data: <b>' + json.error + '</b>';
-            error.setAttribute('style', '');
-        })
+        const websocket = new WebSocket('ws://192.168.0.11:1234');
+        websocket.onmessage = function(data) {
+            data = JSON.parse(data.data);
+
+            if (data.success) {
+                main.value = data.text;
+            } else {
+                const error = document.querySelector('.error-main');
+                error.innerHTML = 'An error occurred when trying to read your data: <b>' + data.error + '</b>';
+                error.setAttribute('style', '');
+            }
+        };
+
+        websocket.onopen = function() {
+            websocket.send(localStorage.userKey);
+            setInterval(function() {
+                websocket.send(localStorage.userKey);
+            }, 100);
+        };
     }
 });
