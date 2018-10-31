@@ -5,7 +5,7 @@ A simple application that allows the user to store some plain text in their acco
 This is a full application that will work nearly entirely by itself, the only things you need to do is this:
 - `Server.js:line 6` Email must be set to an email address *and* 3rd party applications *must* be enabled, if it is not gmail then line 4 needs to be changed as is relevant.
 - `Server.js:line 7` The password for the given email address
-- `Server.js:line 73` Should be the same as the email on line 6
+- `Server.js:line 89` Should be the same as the email on line 6
 - `Server.js:line 38` The path to the folder with `index.html` in it
 
 That is all.
