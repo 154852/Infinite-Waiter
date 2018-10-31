@@ -1,0 +1,158 @@
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    font-weight: 300;
+}
+
+header {
+    background-color: #17202A;
+    color: white;
+}
+
+header nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: 95%;
+    margin: 0 auto;
+}
+
+header nav > div {
+    position: relative;
+}
+
+.center-full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    width: 100%;
+}
+
+.light {
+    font-weight: 100;
+}
+
+.error {
+    background-color: #E74C3C;
+    color: white;
+    padding: 0.5em 1em;
+}
+
+textarea {
+    width: 96%;
+    height: 100vh;
+
+    outline: none;
+    background-color: lightgray;
+    border-radius: 1em;
+
+    border: none;
+
+    margin: 1%;
+
+    font-family: inherit;
+    font-size: 90%;
+    padding: 1%;
+
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+}
+
+.logout {
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+
+    background-color: white;
+    border-radius: 0.5em;
+    padding: 0.5em 0.9em;
+    font-weight: 400;
+
+    box-shadow: 1px 1px 1px 1px lightgray;
+
+    cursor: pointer;
+}
+
+a, .link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+
+    cursor: pointer;
+}
+
+a:hover, .link:hover {
+    color: #808B96;
+}
+
+input {
+    outline: none;
+    background-color: lightgray;
+    border-radius: 0.5em;
+
+    border: none;
+
+    font-family: inherit;
+    font-size: 90%;
+
+    padding: 0.5em 0.9em;
+
+    width: 100%;
+
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+}
+
+input:focus, textarea:focus {
+    background-color: rgb(236, 236, 236);
+}
+
+table {
+    width: 60%;
+    margin: 0 auto;
+}
+
+td {
+    width: 50%;
+}
+
+.button {
+    text-align: center;
+    color: #17202A;
+
+    border: solid #17202A 1px;
+
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+
+    border-radius: 0.3em;
+    display: block;
+    padding: 0.4em 0.9em;
+    margin: 0 auto;
+    width: 20%;
+
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #17202A;
+    color: white;
+}
+
+.border-rad {
+    border-radius: 0.3em;
+}
+
+@media only screen and (max-width: 700px) {
+    textarea {
+        width: 90%;
+
+        padding: 2.5%;
+        margin: 2.5%;
+    }
+}

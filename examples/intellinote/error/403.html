@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IntelliNotes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" media="screen" href="global/global.css" />
+        <script src="global/global.js"></script>
+
+        <style>
+            @media only screen and (max-width: 700px) {
+                .main {
+                    width: 30vh !important;
+                    height: 30vh !important;
+                }
+            }
+
+            .main {
+                font-size: 500%;
+                background-color: lightgray;
+                height: 30vw;
+                width: 30vw;
+                border-radius: 50%;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div>
+                    <a href="index.html"><h1>Intelli<span class="light">Notes</span></h1></a>
+                </div>
+                <div>
+                    <p class="center-full" style="text-align: right">You are logged in as <b><a href="login.html" style="display: inline;" class="username">UNKNOWN</a></b></p>
+                </div>
+            </nav>
+        </header>
+        
+        <div class="center-full main">
+            <div class="center-full">403</div>
+        </div>
+        
+        <script>
+            if (localStorage.username) {
+                for (const element of document.querySelectorAll('.username')) {
+                    element.innerHTML = localStorage.username;
+                    element.href = 'javascript:APP.logout();';
+                }
+            }
+        </script>
+    </body>
+</html>

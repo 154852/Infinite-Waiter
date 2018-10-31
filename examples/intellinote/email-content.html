@@ -1,0 +1,50 @@
+<style>
+    * {
+        font-family: Futura;
+        font-weight: 200;
+    }
+
+    a {
+        color: inherit;
+        font-weight: 900;
+        text-decoration: none;
+
+        transition: 0.3s;
+        -webkit-transition: 0.3s;
+    }
+
+    a:hover {
+        color: #5D6D7E !important;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    #confirm {
+        color: white;
+        background-color: #17202A;
+        padding: 0.5em 1em;
+
+        margin: 0 auto;
+
+        display: block;
+        text-align: center;
+        width: 50%;
+
+        border-radius: 0.3em;
+    }
+</style>
+
+<body>
+    <div style="background-color: #17202A; color: white; text-align: center;">
+        <h1 style="padding: 0.3em 0"><a href="http://[ADDRESS]">Intelli<span style="font-weight: 100;">Note</span></a></h1>
+    </div>
+    <div style="margin: 0 3%">
+        <h2>Welcome, [USERNAME], to Intelli<span style="font-weight: 100;">Note</span>...</h2>
+        <p style="text-align: center; margin: 0 3%">To begin, please confirm your email address. We require this because it proves you are human, without making you do a test that takes half an hour and is too vague to make any sense.</p>
+    
+        <br />
+        <a href="http://[ADDRESS]/confirm.html?id=[ID]" id="confirm">I am not, in fact, a robot. (Probably)</a>
+    </div>
+</body>

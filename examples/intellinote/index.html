@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IntelliNotes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" media="screen" href="global/global.css" />
+        <script src="global/global.js"></script>
+        <script src="js/index.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div>
+                    <a href="index.html"><h1>Intelli<span class="light">Notes</span></h1></a>
+                </div>
+                <div>
+                    <p class="center-full" style="text-align: right">You are logged in as <b><a href="login.html" style="display: inline;" class="username">UNKNOWN</a></b></p>
+                </div>
+            </nav>
+        </header>
+        <div class="error-main error" style="display: none;">To start you first need to confirm your email address, <b class="email"></b></div>
+
+        <textarea class="main"></textarea>
+
+        <a href="javascript:APP.logout()" class="logout">Log Out</a>
+    </body>
+</html>

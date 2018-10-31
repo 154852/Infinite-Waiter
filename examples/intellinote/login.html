@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IntelliNotes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" media="screen" href="global/global.css" />
+        <script src="global/global.js"></script>
+        <script src="js/login.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div>
+                    <a href="index.html"><h1>Intelli<span class="light">Notes</span></h1></a>
+                </div>
+                <div>
+                    <p class="center-full" style="text-align: right">You are logged in as <b class="username">UNKNOWN</b></p>
+                </div>
+            </nav>
+        </header>
+        <div class="signup" style="display: none;">
+            <div class="center-full">
+                <table>
+                    <tr>
+                        <td>Your username:</td>
+                        <td><input name="username" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td>Your email address:</td>
+                        <td><input name="cr-email" type="email" /></td>    
+                    </tr>
+                    <tr>
+                        <td>Your password:</td>
+                        <td><input name="cr-password" type="password" /></td>
+                    </tr>
+                    <tr>
+                        <td>Your password again:</td>
+                        <td><input name="confirm-password" type="password" /></td>
+                    </tr>
+                </table>
+                <br />
+                <div class="button">Create Account</div>
+                <br />
+                <div style="width: 60%; margin: 0 auto">
+                    <div class="error border-rad" style="display: none;"></div>
+                </div>
+                
+                <p class="switch link" style="text-align: center;">Already have an account?</p>
+            </div>
+        </div>
+        <div class="login">
+            <div class="center-full">
+            <table>
+                <tr>
+                    <td>Your email address:</td>
+                    <td><input name="li-email" type="email" /></td>    
+                </tr>
+                <tr>
+                    <td>Your password:</td>
+                    <td><input name="li-password" type="password" /></td>
+                </tr>
+            </table>
+            <br />
+            <div class="button">Log In</div>
+            <br />
+            <div style="width: 60%; margin: 0 auto">
+                <div class="error border-rad" style="display: none;"></div>
+            </div>
+            
+            <p class="switch link" style="text-align: center;">Don't yet have an account?</p>
+        </div>
+    </body>
+</html>
